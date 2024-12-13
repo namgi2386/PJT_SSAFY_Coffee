@@ -1,10 +1,15 @@
 package com.group.ssafycoffeeTest_app.controller.product;
 
+import com.group.ssafycoffeeTest_app.domain.product.Product;
 import com.group.ssafycoffeeTest_app.dto.product.request.ProductCreateRequest;
+import com.group.ssafycoffeeTest_app.dto.product.response.ProductResponse;
 import com.group.ssafycoffeeTest_app.service.product.ProductService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -16,6 +21,14 @@ public class ProductController {
     @PostMapping("/product")
     public void saveProduct(@RequestBody ProductCreateRequest request){
         productService.saveProduct(request);
+    }
+    @GetMapping("/product")
+    public List<ProductResponse> getProducts(){
+        return productService.getProducts();
+    }
+    @GetMapping("/productAll")
+    public List<Product> getProductsAll(){
+        return productService.getProductsAll();
     }
 
 }
