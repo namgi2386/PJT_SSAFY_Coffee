@@ -1,5 +1,6 @@
 package com.group.ssafycoffeeTest_app.domain.product;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,6 +8,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("productID")
     private Long productID = null;
 
     @Column(name = "Productname")
@@ -54,5 +56,9 @@ public class Product {
 
     public String getField() {
         return field;
+    }
+    public void updateProduct(String name, int price){
+        this.productName = name;
+        this.price = price;
     }
 }
