@@ -6,6 +6,7 @@ import com.group.ssafycoffeeTest_app.dto.product.request.ProductCreateRequest;
 import com.group.ssafycoffeeTest_app.dto.product.response.ProductResponse;
 import com.group.ssafycoffeeTest_app.dto.user.response.UserResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    @Transactional
     public void saveProduct(ProductCreateRequest request){
         productRepository.save(new Product(request.getProductName(),
                 request.getPrice(),
@@ -26,12 +28,14 @@ public class ProductService {
                 request.getInfo(),
                 request.getField()));
     }
+    @Transactional(readOnly = true)
     public List<ProductResponse> getProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream()
                 .map(product -> new ProductResponse(product.getProductName() , product.getCategory()))
                 .collect(Collectors.toList());
     }
+    @Transactional(readOnly = true)
     public List<Product> getProductsAll(){
         return productRepository.findAll();
     }

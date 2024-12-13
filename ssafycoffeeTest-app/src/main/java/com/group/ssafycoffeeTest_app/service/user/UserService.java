@@ -5,6 +5,7 @@ import com.group.ssafycoffeeTest_app.domain.user.UserRepository;
 import com.group.ssafycoffeeTest_app.dto.user.request.UserCreateRequest;
 import com.group.ssafycoffeeTest_app.dto.user.response.UserResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,10 +17,12 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
+    @Transactional
     public void saveUser(UserCreateRequest request) {
         userRepository.save(new User(request.getAccount(),request.getPassword(), request.getName(), request.getMMID(),  request.getRefund()));
     }
+
+    @Transactional(readOnly = true)
     public List<UserResponse> getUsers() {
         List<User> users = userRepository.findAll();  // 모든 사용자 조회
         return users.stream()
