@@ -1,7 +1,11 @@
 package com.group.ssafycoffeeTest_app.domain.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.group.ssafycoffeeTest_app.domain.product.productoption.ProductOption;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -22,6 +26,13 @@ public class Product {
     private String info;
     @Column(name = "Field")
     private String field;
+
+    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<ProductOption> productOptions = new ArrayList<>();
+
+    public List<ProductOption> getProductOptions() {
+        return productOptions;
+    } // 혹시 사용할지 모르니까 추가함
 
     public Product(){}
 
